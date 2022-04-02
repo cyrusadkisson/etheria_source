@@ -120,7 +120,7 @@ contract EtheriaWrapper1pt0 is Ownable, ERC721 {
     // When a new offer comes in, the ETH is stored in the contract and the offers[] and offerers[] arrays are expanded
     // by 1 item to store the bid.
     //
-    // The tile owner can then rejectOffer(col, row, offerIndex) or acceptOffer(col, row, offerIndex) to transfer
+    // The tile owner can then deleteOffer(col, row, offerIndex, amount) or acceptOffer(col, row, offerIndex) to transfer
     // the tile to the successful bidder. 
     
     // ***** How to wrap *****
