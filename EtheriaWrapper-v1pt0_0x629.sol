@@ -126,7 +126,7 @@ contract EtheriaWrapper1pt0 is Ownable, ERC721 {
     // ***** How to wrap *****
     //
     // 0. Start with the tile owned by your normal Ethereum account (not a smart contract) and make sure there are no 
-    //      unwanted offers in the offer system. Call rejectOffer(col, row) until the arrays are completely empty.
+    //      unwanted offers in the offer system. Call etheria.deleteOffer(col, row) until the arrays are completely empty.
     // 1. Call the wrapper contract's "makeOfferViaWrapper(col,row)" along with 0.01 ETH to force the wrapper to make 
     //      an offer on the base token. Only the tile owner can do this. The wrapper will save the owner's address.
     // 1b. Check the base token's offerer and offerers arrays. They should be 1 item long each, containing 0.01 and the
