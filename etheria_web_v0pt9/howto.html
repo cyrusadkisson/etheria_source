@@ -1,0 +1,142 @@
+<meta charset="utf-8" /> 
+<!DOCTYPE html>
+<head>
+	<title>Ξtheria - HowTo</title>
+    <link rel="icon" type="image/png" href="images/h_16.png" />
+    <script type="text/javascript" src="lib/jquery-2.1.4.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="css/common.css">
+</head>
+
+<body>
+	<div style="width:100%"> 
+    	<img src='images/etheria_logo_white.png'></img>
+	</div>
+	<div class="navbuttoncontainer">
+		<table style="width:100%">
+		 	<tr>
+		 		<td class="navbutton"><a href="whatis.html" id="whatis_link">Overview</a></td>
+		 		<td class="navbutton"><a href="howto.html" id="howto_link">How To Play</a></td>
+		 		<td class="navbutton"><a href="explore.html" id="explore_link">Map</a></td>
+		 		<td class="navbutton"><a href="blockref.html" id="blocks_link">Blocks</a></td>
+		 		<td class="navbutton"><a href="tile.html" id="color_link">Tile Lookup</a></td>
+		 		<td class="navbutton"><a href="colorref.html" id="color_link">Colors</a></td>
+		 	</tr>
+	 	</table> 
+	</div>
+	<div class="content"> 
+	<div class="contentheader">How to play</div>
+		Prerequisites:
+		<ol>
+			<li><span class="list_item_emphasis"><a href="https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum#installation-instructions">Install an Ethereum command line interface.</a></span></li>
+			<li><span class="list_item_emphasis">Open a console geth console. (Terminal 1: "geth", Terminal 2: "geth attach")</span>
+			<li><span class="list_item_emphasis"><a href="https://docs.google.com/document/d/14EIe984_86Y-uuNm-a4EsVeD3eI4qAAlz_MZof1qkqM/edit#bookmark=id.j73m3062mrz8">Create an Ethereum account.</a></span></li>
+			<li><span class="list_item_emphasis"><a href="https://docs.google.com/document/d/14EIe984_86Y-uuNm-a4EsVeD3eI4qAAlz_MZof1qkqM/edit#bookmark=id.93e8lr5mmrlr">Get some Ether.</a></span></li>
+		</ol>
+	<div class="contentheader nontop">Set up your interface to Ξtheria</div>
+		Inside geth:
+		<pre>var abi = [{"constant":false,"inputs":[],"name":"setLocked","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"getWhatHappened","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[],"name":"getLocked","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"buyTile","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"_s","type":"string"}],"name":"setStatus","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"newowner","type":"address"}],"name":"setOwner","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getLastFarm","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"index","type":"uint256"},{"name":"_block","type":"int8[5]"}],"name":"editBlock","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"blocktype","type":"int8"}],"name":"farmTile","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"_n","type":"string"}],"name":"setName","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getName","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getStatus","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getOwner","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":false,"inputs":[],"name":"empty","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getBlocks","outputs":[{"name":"","type":"int8[5][]"}],"type":"function"},{"inputs":[],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"col","type":"uint8"},{"indexed":false,"name":"row","type":"uint8"}],"name":"TileChanged","type":"event"}];
+var etheria = web3.eth.contract(abi).at('0xb21f8684f23dbb1008508b4de91a0aaedebdb7e4');</pre>
+	<div class="contentheader nontop">Buy an unowned tile</div>
+	<p>
+		Take a look at the Ξtheria map and decide which tile you want to buy. If it's unowned, then obtaining it is easy. Just pay 1 ETH for it.
+		<pre>etheria.buyTile(col,row,{from:eth.coinbase,gas:1000000,value:web3.toWei(1,'ether')});</pre>
+		Notes:
+		<ul>
+			<li>Money is automatically refunded if the purchase fails.</li>
+			<li>You can't buy water tiles.</li>
+			<li>Excluding water, there is no practical difference in land types or elevation.</li> 
+		</ul>
+	</p>
+	<div class="contentheader nontop">Farm your tile for blocks</div>
+	<p>
+		Now that you have a tile, you'll want to get some blocks for it so you can build that dream home you always wanted. Or a giant penis. Either way:
+		<pre>etheria.farmTile(col,row,blocktype,{from:eth.coinbase,gas:1200000,value:web3.toWei(1,'ether')});</pre> 
+		Notes:
+		<ul>
+			<li>Farming gives you 10 blocks of the specified type.</li>
+			<li><span class='list_item_emphasis'>Blocks are hidden to begin with.</span> You must edit/move them to get them to appear.</li>
+			<li>Farming a tile can only be performed once every 2500 Ethereum blocks (roughly once every 12 hours).</li>
+			<li>You can farm more often for 1 ETH per farm. If you're not sure if your cooldown has expired, you can send 1 ETH regardless and it'll get refunded if your free farm is ready.</li>
+			<li>Avg gas used: 75,000</li>
+			<li>WARNING: It appears that each time you farm, your "editBlock" requests will increase in gas use (because the block array gets bigger).
+			Farming more than 260 total blocks (13 farmTile actions) could put your "editBlock" requests above the current 3.14 million gas unit limit, essentially "bricking" your tile.</li> 
+		</ul>
+		To view the blocks you farmed:
+		<pre>etheria.getBlocks(col,row);</pre>
+	</p>
+	<div class="contentheader nontop">Edit a block</div>
+		
+				<p>
+		Blocks have simple x,y,z coordinates on your tile. New blocks begin life HIDDEN with x,y,z set to 0,0,-1.
+		To select which block you want to edit, you'll need to know its index in your list of blocks. Consult the <a href='tile.html'>Tile Lookup</a> to view your list of blocks.
+		<div style="width:550px;margin-right:auto;margin-left:auto;padding:10px"><img src="images/boundaries.png" style="width:550px;height:303px;"></div> 
+		<!--<div style="margin-right:auto;margin-left:auto;padding:10px;text-align:center"><img src="images/clear-hex-grid.png"><br><em>Printing this out and drawing on it is helpful.</em></div>-->
+		 
+		Once you've selected the block you want to edit (i.e. found its index), do this: 
+		<pre>etheria.editBlock(col,row,index,[zero_or_-1,x,y,z,color],{from:eth.coinbase,gas:2500000});</pre>
+		Notes:
+		<ul>
+			<li>"col","row" = the coords of your tile</li>
+			<li>(NEW) "zero_or_-1" = put -1 if you want to change the color of a block ONLY. Put 0 for all other edits.</li>
+			<li>x, y, z are the coordinates WITHIN the tile</li>
+			<li>color is any value from -128 to 86. See the chart below.</li>
+			<li>Every block has a "key hex" which is its first x,y,z hex (out of 8). The x,y,z coords of the key hex are the same as the x,y,z coords of the block.</li>
+			<li>Each subsequent hex is placed based on the key hex location. Ex: The West-to-East horizontal beam [[0,0,0], [1,0,0] ... [7,0,0]] placed at key hex 0,4 would result in [[0,4,0], [1,4,0] ... [7,4,0]]</li>
+			<li>Blocks must fall entirely inside your tile.</li>
+			<li>Blocks cannot conflict with other blocks. NOTE: Due to computational constraints, the block you're moving counts as an "other block" until it has successfully moved. This means if where you want to move it conflicts with where it is now, you'll have to move it out of the way first, then, with another edit, put it back where you want it. (Sorry.)</li>
+			<li>Blocks must be placed on the ground OR on other blocks (in the same way as standard LEGOs).</li>
+			<li>Blocks cannot be rehidden after being shown. (Any z value < 0 will be rejected.)</li>
+			<li>GAS USAGE: Every time you place a block, gas usage for the next increases. Unfortunately, you'll hit pi million (the current block limit) at ~30 blocks.</li>
+		</ul>
+		<a href="colorref.html" id="color_link">Color Reference</a>
+	</p>
+	<div class="contentheader nontop">Change the "name" of your tile</div>
+		<p>
+			<pre>etheria.setName.sendTransaction(col,row,"Tyson Hill",{from:eth.coinbase,gas:1000000});</pre>
+		Notes:
+		<ul>
+			<li>"col","row" = the coords of your tile</li>
+			<li>This value will appear when someone mouses over your tile in the <a href='explore.html'>map explorer</a></li>
+			<li>Gas usage to set "fivedogit" was 50,000, results may vary depending on string length</li>
+		</ul>
+	</p>
+	<div class="contentheader nontop">Change the "status" of your tile</div>
+		<p>
+			<pre>etheria.setStatus(col,row,"This thing I built is awesome! Suck it, everyone else.",{from:eth.coinbase,gas:1000000});</pre>
+		Notes:
+		<ul>
+			<li>"col","row" = the coords of your tile</li>
+			<li>This value will appear when someone mouses over your tile in the <a href='explore.html'>map explorer</a></li>
+			<li>Eventually this value will be automatically repeated on the <a href='http://twitter.com/etheria_feed'>@ethereia_feed</a> Twitter account, but I haven't hooked it up yet.</li>
+			<li>To prevent spam, updating your status costs 1 ETH.</li>
+		</ul>
+	</p>
+	<div class="contentheader nontop">Give your tile to someone else</div>
+		<p>
+			<pre>etheria.setOwner(col,row,web3.eth.toBigNumber('0xabc123...'),{from:eth.coinbase,gas:1000000});</pre>
+		Notes:
+		<ul>
+			<li>"col","row" = the coords of your tile</li>
+			<li>Trustless exchanges can be created outside of Ξtheria that call the setOwner() method. (e.g. Ether for land, etc.)</li>
+			<li>If the community would rather have the offer system back, I can re-introduce it in a future version.</li>
+		</ul>
+	</p>
+	<div class="contentheader nontop">A note on troubleshooting</div>
+	<p>
+		Ξtheria contains a "whathappened" value that can be used to figure out where you've gone wrong if something doesn't work the way you expected.
+		<pre>etheria.getWhatHappened();</pre>
+		NOTE: This value is shared amongst all Ξtheria players, so if you're the the only person interacting with Ξtheria for a minute or two, it should give you good information. If not, you could get confusing info.
+	</p>
+	</div>
+    <div class="footer">
+   		Ξtheria was created by Cyrus Adkisson. You can email him at c@mailcyr at the USA TLD.
+    	<table style="margin-right:auto;margin-left:auto">
+    		<tr>
+    			<td><a href="http://www.twitter.com/etheria_feed"><img src="images/twitter.png"></a></td>
+    			<td><a href="http://www.github.com/fivedogit/etheria"><img src="images/github.png"></a></td>
+    		</tr>
+    	</table>
+    </div>
+</body>
+
+</html>
