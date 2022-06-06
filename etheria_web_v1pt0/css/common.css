@@ -1,0 +1,134 @@
+html { 
+  background: url('../images/bigmap_background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+body {
+font-size:12px px;
+text-align:center;
+font-family: arial;
+}
+
+p{
+	padding:20px
+}
+
+pre {
+font-size:12px px;
+color:#00FF00;
+width:100px %;
+border-radius:5 px;
+height:auto;
+overflow:auto;
+background-color:#000000;
+word-break:normal!important;
+word-wrap:normal!important;
+white-space:pre!important;
+margin:20px;
+padding:20px;
+border-radius:5px
+}
+
+ol {
+	/*
+	padding: 0px;
+	margin:0px*/
+}
+
+ a:link {
+   		color: #FFFFFF;
+    	text-decoration: none;
+	}
+a:hover {
+            text-decoration: underline;
+        }
+a:visited {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+.titleheader {
+	width: 1080px;
+	margin-right:auto;
+	margin-left:auto;
+	font-size:40px;
+	text-align:center;
+	font-weight:bold;
+	padding-top:20px;
+	padding-bottom:10px;
+}
+
+.navbuttoncontainer {
+	width:1080px;
+	margin-right:auto;
+	margin-left:auto;
+	padding-top:10px;
+	margin-bottom:15px;
+}
+
+.navbutton{
+	text-align:center;
+	font-size:24px;
+	font-weight:bold;
+}
+
+.content {
+	width:1020px;
+	background-color:#eeeeee;
+	color:black;
+	text-align:left;
+	margin-right:auto;
+	margin-left:auto;
+	padding-top:10px;
+	padding-left:30px;
+	padding-right:30px;
+	padding-bottom:10px;
+	line-height:30px
+}
+
+.content li {
+ line-height:35px
+}
+
+.paragraphdiv {
+	padding-left:35px;
+	padding-right:35px;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+.content a:link {
+   		color: #0000FF;
+    	text-decoration: none;
+	}
+.content a:hover {
+            text-decoration: underline;
+        }
+ .content       a:visited {
+            color: #0000FF;
+            text-decoration: none;
+        }
+ 
+ .contentheader {
+ 	font-size:34px;
+ 	font-weight:bold;
+ 	text-align:center;
+ 	padding-top:20px;
+ }
+       
+ .nontop {
+ 	font-size:30px;
+ 	padding-top:30px;
+ }
+        
+.list_item_emphasis {
+	font-weight:bold
+}
+
+.footer {
+	padding:40px;
+}
+

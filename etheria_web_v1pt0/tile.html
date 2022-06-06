@@ -1,0 +1,51 @@
+<meta charset="utf-8" />
+<!DOCTYPE html>
+<head>
+<title>Ξtheria - Tile blocklist</title>
+<link rel="icon" type="image/png" href="images/h_16.png" />
+<script type="text/javascript" src="lib/jquery-2.1.4.min.js"></script>
+<script src="lib/three.min.js"></script>
+<script src="js/colors.js"></script>
+<script type="text/javascript" src="js/tile.js"></script>
+<script src="js/map_and_block_utils.js"></script>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+</head>
+
+<body>
+	<div style="width: 100%">
+		<img src='images/etheria_logo_white.png'></img>
+	</div>
+	<div class="navbuttoncontainer">
+		<table style="width: 100%">
+			<tr>
+				<td class="navbutton"><a href="whatis.html" id="whatis_link">Overview</a></td>
+				<td class="navbutton"><a href="howto.html" id="howto_link">How To Play</a></td>
+				<td class="navbutton"><a href="explore.html" id="explore_link">Map</a></td>
+				<td class="navbutton"><a href="blockref.html" id="blocks_link">Blocks</a></td>
+				<td class="navbutton"><a href="tile.html" id="color_link">Tile Lookup</a></td>
+				<td class="navbutton"><a href="colorref.html" id="color_link">Colors</a></td>
+			</tr>
+		</table>
+	</div>
+	<div class="content">
+		<div class="contentheader">Tile blocklist</div>
+		<div id='colrow_entry_div' style='text-align: center; padding-top: 10px;'>
+			<form id='colrow_form' action='#' method="get">
+				col: <input type=text size=2 maxlength=2 id='col_input' name='col_input'> row: <input type=text size=2 maxlength=2 id='row_input' name='row_input'> <input type=submit value="Go">
+				</submit>
+			</form>
+		</div>
+		<div id='tile_div' style='padding-top: 20px; min-height: 250px'></div>
+	</div>
+	<div class="footer">
+		Ξtheria was created by Cyrus Adkisson. You can email him at c@mailcyr at the USA TLD.
+		<table style="margin-right: auto; margin-left: auto">
+			<tr>
+				<td><a href="http://www.twitter.com/etheria_feed"><img src="images/twitter.png"></a></td>
+				<td><a href="http://www.github.com/fivedogit/etheria"><img src="images/github.png"></a></td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

@@ -41,4 +41,4 @@ pull the state, put it at /map, and it should work.
 
 Why different folders for different Etheria versions? Because the build mechanics varied slightly from version to version (different brick definitions, eg). 
 
-Note that v1.1 and v1.2 are identical in this regard. 
+Note that v1.1 and v1.2 are identical in this regard.

@@ -1,0 +1,90 @@
+<meta charset="utf-8" /> 
+<!DOCTYPE html>
+<head>
+	<title>Ξtheria - Explorer</title>
+    <link rel="icon" type="image/png" href="images/h_16.png" />
+		<script src="lib/three.min.js"></script>
+		<script src="js/colors.js"></script>
+		<script src="js/tiles_constant.js"></script>
+		<script src="js/explore.js"></script>
+		<script src="js/map_and_block_utils.js"></script>
+		<script src="js/colorutils.js"></script>
+		<script src="lib/jquery-2.1.4.min.js"></script>
+		<script src="lib/point.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<meta charset="utf-8">
+		 <script>
+    $(document).ready(function(){
+    	 $("#noticeclosebutton_link").click(function(){
+    		$("#notice_table").hide();
+    		return false;
+    	 });
+    });
+   
+    </script>
+		<style>
+			body {
+				margin: 0px;
+				overflow: hidden;
+				font-size:12px;
+			}
+			td {
+				font-size:12px;
+			}
+			#titlediv {
+    			position: fixed;
+    			top: 1em;
+    			left: 1em;
+			}
+			#info {
+				position: fixed;
+				top: 0px;
+				left: 30%;
+				right: 30%;
+				padding: 5px;
+				z-index:100;
+				font-family:arial;
+				font-size:14px
+			}	
+			#hexinfodiv {
+    			position: fixed;
+    			top: 1em;
+    			right: 1em;
+    			background-color:#FFDB94;
+    			font-family:arial;
+    			width:350;
+    			padding:5px;
+    			border-radius:5px;
+			}	
+			
+			
+		</style>
+	</head>
+
+	<body>
+		<div id="titlediv" style='position: fixed;'><img src='images/etheria_logo_white.png' style='width:311px;height:80px'></div>
+		<div id="info"><span style='color:white'>controls: left mouse = rotate. right mouse = slide. mouse scroll = zoom</span></div>
+	<!-- 	 <div id="info"><span style='color:white'><span style="font-size:14px;color:red;font-weight:bold">NOTICE TO OWNERS:</span> Ξtheria 1.1 is live! See the <a href='http://www.fivedogit.com/2015/etheria-1-1-deployed/'>blog post</a> and <a href='howto.html'>HowTo page</a> for more details on these changes. </span></div>  -->
+		<div id="hexinfodiv">
+			<div id="tileinfotitlediv" style="height:20px;text-align:center;font-weight:bold;font-size:16px">
+				Tile info
+			</div>
+			<div id="tileinfobodydiv"style=" padding:10px">
+				Mouseover tiles for more information
+			</div>
+			<div id="blockinfotitlediv" style="height:20px;text-align:center;font-weight:bold;font-size:16px">
+				Block info
+			</div>
+			<div id="blockinfobodydiv" style="padding:10px">
+				Mouseover blocks for more information
+			</div>
+			<div id="hexinfotitlediv" style="height:20px;text-align:center;font-weight:bold;font-size:16px">
+				Hex info
+			</div>
+			<div id="hexinfobodydiv" style="padding:10px">
+				Mouseover hexes for more information
+			</div>
+		</div>
+		<div id="container"></div>
+	</body>
+</html>
