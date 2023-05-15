@@ -2,7 +2,7 @@
 
 Folder name = NKNVELSC (Non-killable, non-viable, Etheria-like smart contract)
 
-WARNING! This test contract is live on the chain, can't be killed but is FATALLY BUGGED.
+WARNING! This test contract is live on the chain, can't be killed but is FATALLY BUGGED. 
 ______ _____   _   _ _____ _____  ______ _   ___   __
 |  _  \  _  | | \ | |  _  |_   _| | ___ \ | | \ \ / /
 | | | | | | | |  \| | | | | | |   | |_/ / | | |\ V / 
