@@ -21,9 +21,28 @@ Block 385709
 Oct-15-2015 03:55:57 AM +UTC
 0xcf1eecf5929c151427dc3662a28353266ea3f9e6
 
+Explanation of bug:
+
+acceptOffer is missing an ownership check. rejectOffer starts with "if(tiles[col][row].owner != msg.sender) return;" but acceptOffer has no such line:
+ 
+>  function acceptOffer(uint8 col, uint8 row, uint8 i) // accepts the offer at index (1-10)
+>  {
+>        tiles[col][row].owner.send(tiles[col][row].offers[i]); // send offer money to oldowner
+>        tiles[col][row].owner = tiles[col][row].offerers[i]; // new owner is the offerer
+>        delete tiles[col][row].offerers; // delete all offerers
+>        delete tiles[col][row].offers; // delete all offers
+>        return;
+>  }
+  
+So anyone, not just the tile's owner, can accept any offer on any tile. To steal a tile, place the minimum offer (0.01 ETH) with makeOffer and immediately accept it yourself with acceptOffer. 
+The 0.01 ETH goes to the old owner and the tile is yours. Anyone can also force a sale of a tile they don't own by accepting someone else's offer on it.
+The bytecode on the chain confirms this: acceptOffer never reads msg.sender, while rejectOffer does.
+
+
 var etheriaAddress = "0xcf1eecf5929c151427dc3662a28353266ea3f9e6";
 var abi = [{"constant":false,"inputs":[],"name":"setLocked","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getWhatHappened","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLocked","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"buyTile","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"_s","type":"string"}],"name":"setStatus","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"newowner","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getLastFarm","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"index","type":"uint256"},{"name":"_block","type":"int8[5]"}],"name":"editBlock","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"blocktype","type":"int8"}],"name":"farmTile","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"},{"name":"_n","type":"string"}],"name":"setName","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getName","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getStatus","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"empty","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"getBlocks","outputs":[{"name":"","type":"int8[5][]"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":false,"name":"col","type":"uint8"},{"indexed":false,"name":"row","type":"uint8"}],"name":"TileChanged","type":"event"}];
 var etheria = new web3.eth.Contract(abi, etheriaAddress);
+
 
 Exact bytecode match with code below and 
 Solidity: 0.1.5 w/ default optimization (200) (1 compilation)
