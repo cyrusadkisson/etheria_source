@@ -21,16 +21,18 @@ Below the comment is source code that compiles to exactly the bytecode on the ch
 
 | Version | Compiler (optimizer on) |
 |---|---|
-| v0.6 | solc 0.1.4 |
-| v0.7 | solc 0.1.5 nightly 2015-10-13 (also 0.1.5 release, 0.1.6) |
-| v0.8 | solc 0.1.5 nightly 2015-10-13 (also 0.1.6; not the 0.1.5 release) |
-| v0.85 | solc 0.1.6 (also 0.1.5 nightlies of 2015-10-13/15/16) |
+| v0.6 | solc 0.1.4 (also 0.1.3) |
+| v0.7 | solc 0.1.5 (release or 2015-10-13 nightly; also 0.1.6, 0.1.7) |
+| v0.8 | solc 0.1.5 (release or 2015-10-13 nightly; also 0.1.6, 0.1.7) |
+| v0.85 | solc 0.1.6 (also 0.1.5 nightlies of 2015-10-13/15/16 and 0.1.7; not the 0.1.5 release) |
 
 v0.7 and v0.85 were deployed from uncommitted working copies of the etheriaSource repo. Their sources here are reconstructions
 that match byte for byte, and the file comments describe how each one differs from the nearest
 commits in the original development repo.
 
-To check a match, compile the whole `.sol` file (the comment is ignored) with the listed compiler,
+To check a match, compile the whole `.sol` file (header comment included) with the listed compiler,
 optimizer on, and compare the `Etheria` runtime bytecode with `eth_getCode` for the address.
+Compile each file exactly as it is: these old compilers' output can depend on the whole file text,
+comments included, so a copy with the header removed or edited may not reproduce the match.
 The old compilers are only available as `soljson` builds in
 [ethereum/solc-bin](https://github.com/ethereum/solc-bin).
