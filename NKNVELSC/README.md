@@ -11,7 +11,7 @@ wrapped tokens or trading for these addresses is a scam.**
 
 | File | Version | Address | Deployed (UTC) | Fatal bug |
 |---|---|---|---|---|
-| `etheria-0pt6_0x648.sol` | v0.6 | `0x6489fc370c7df314ee0bdfb1fbd185f1bc457d89` | block 314103, 2015-09-30 21:37 | `setOwner` uses `==` instead of `=`, so tiles can never be transferred |
+| `etheria-0pt6_0x648.sol` | v0.6 | `0x6489fc370c7df314ee0bdfb1fbd185f1bc457d89` | block 314103, 2015-09-30 21:37 | Every tile is owned by a corrupted address nobody controls (`addBlock` overwrote the stored creator address), and `setOwner` uses `==` instead of `=`. Tiles can never be transferred. |
 | `etheria-0pt7_0x014.sol` | v0.7 | `0x0148368e9efd8d6a5dd56134cd2b3f941e10d953` | block 383700, 2015-10-14 18:08 | `acceptOffer` has no owner check, so anyone can accept any offer on any tile |
 | `etheria-0pt8_0xcf1.sol` | v0.8 | `0xcf1eecf5929c151427dc3662a28353266ea3f9e6` | block 385709, 2015-10-15 03:55 | `acceptOffer` has no owner check, so anyone can accept any offer on any tile |
 | `etheria-0pt85_0xa2f.sol` | v0.85 | `0xa2f63e28172ebf2477f4c1a87aed68aaa3ebbe3d` | block 399334, 2015-10-17 21:45 | `makeOffer` lets anyone take a tile that hasn't been farmed in 100,000 blocks for 1 ETH (paid to the creator), and `acceptOffer` has no owner check |
