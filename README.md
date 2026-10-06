@@ -10,9 +10,9 @@ tiles that players own, trade and build on. Website: [etheria.world](https://eth
 
 | Version | Address | Deployed (UTC) | Source | Source match |
 |---|---|---|---|---|
-| v0.9 | `0xe468d26721b703d224d05563cb64746a7a40e1f4` | block 407810, 2015-10-19 14:54 | [`etheria-0pt9_0xe46.sol`](etheria-0pt9_0xe46.sol) | Exact (solc 0.1.6) |
+| v0.9 | `0xe468d26721b703d224d05563cb64746a7a40e1f4` | block 407810, 2015-10-19 14:54 | [`etheria-0pt9_0xe46.sol`](etheria-0pt9_0xe46.sol) | Exact (solc 0.1.6, [recipe](verification/)) |
 | v1.0 | `0xe414716f017b5c1457bf98e985bccb135dff81f2` | block 420373, 2015-10-22 03:34 | [`etheria-1pt0_0xe41.sol`](etheria-1pt0_0xe41.sol) | Exact (solc 0.1.6, [recipe](verification/)) |
-| v1.1 | `0x169332ae7d143e4b5c6baedb2fef77bfbddb4011` | block 459708, 2015-10-29 21:11 | [`etheria-1pt1_0x169.sol`](etheria-1pt1_0x169.sol) | Exact (solc 0.1.6) |
+| v1.1 | `0x169332ae7d143e4b5c6baedb2fef77bfbddb4011` | block 459708, 2015-10-29 21:11 | [`etheria-1pt1_0x169.sol`](etheria-1pt1_0x169.sol) | Exact (solc 0.1.6, [recipe](verification/)) |
 | v1.2 | `0xb21f8684f23dbb1008508b4de91a0aaedebdb7e4` | block 470957, 2015-11-01 01:20 | [`etheria-1pt2_0xb21.sol`](etheria-1pt2_0xb21.sol) | Exact (solc 0.1.6, [recipe](verification/)) |
 
 Each file starts with a comment giving the address, the function signatures, the ABI and notes on the
@@ -26,11 +26,10 @@ match, followed by the source.
 
 **Compiling these.** solc 0.1.6 exists only as a `soljson` build in
 [ethereum/solc-bin](https://github.com/ethereum/solc-bin). Its output can depend on what the same
-compiler instance compiled before. The v0.9 and v1.1 files match after being compiled more than once in
-one instance, as their headers note. v1.0 and v1.2 match through recipes in
-[`verification/`](verification/): padded copies of their sources, compiled after two unrelated helper
-contracts that leave the compiler in the right state. [`NKNVELSC/README.md`](NKNVELSC/README.md#how-to-verify)
-has a short script for driving these old compilers.
+compiler instance compiled before, so each version matches only through a recipe: v0.9 and v1.1 by
+compiling their file several times in one instance, v1.0 and v1.2 by compiling padded copies of their
+sources after two unrelated helper contracts. [`verification/`](verification/) has the recipes and a
+script that runs them.
 
 ## Helper contracts
 
