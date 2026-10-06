@@ -1,0 +1,26 @@
+
+The following instructions allow to reproduce the bytecode of the Etheria contract 0xB21f8684f23Dbb1008508B4DE91a0aaEDEbdB7E4.
+
+
+1. Load the 3 solidity files included in the .tar.gz into Remix (forwarder.sol, 31209352.sol, etheria.sol).
+
+   Note 1: The filenames and contents (including comments and whitespace) should not be altered.
+   Note 2: The files should be placed in the _root_ of the workspace (_not_ under contracts/).
+
+2. Select compiler 0.1.6+commit.d41f8b7c
+
+3. Check "Enable optimization"
+
+4. Compile the 2 auxiliary files in the following order
+  - forwarder.sol
+  - 31209352.sol
+  
+5. Finally compile the contract's source: etheria.sol
+
+   This should produce the exact bytecode of 0xB21f8684f23Dbb1008508B4DE91a0aaEDEbdB7E4.
+
+
+Note that the 2 auxiliary files are trivial contracts completely unrelated to Etheria. The needed
+simply because soljson-v0.1.6+commit.d41f8b7c.js has non-deterministic output, which depends on
+_previous_ compilation. Compiling these 2 auxiliary contracts (which were found via random search)
+just happens to leave the compiler in the state needed to produce the exact target bytecode.

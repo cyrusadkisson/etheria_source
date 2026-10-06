@@ -47,15 +47,13 @@ var abi = [
 ];
 var etheria = new web3.eth.Contract(abi, etheriaAddress);
 
-Verified on Etherscan in Nov 2021 by compiling three times with solc 0.1.6 (d41f8b7c), optimizer on (200 runs).
-Etherscan's copy is this source plus padding (lines of spaces before and after it), which shifts this old compiler's
-memory layout and with it the optimizer's output. As stored on Etherscan it has lost the newline after the first
-padding line and no longer compiles.
-
-Local compiles of this file with solc 0.1.6 come out 10,857 or 10,858 bytes against 10,859 on chain, and differ only in optimizer
-choices: the chain computes the stored lengths of "setName:OK" and "buyTile:OK" at run time where a local compile usually
-folds one of them into a constant, and a few blocks are ordered differently. Which choice the optimizer makes depends on
-memory layout, so it changes with the input's length and with what the same compiler instance compiled before.
+Exact bytecode match, runtime and creation, with solc 0.1.6 (d41f8b7c), optimizer on, using the recipe Dedaub found in
+Nov 2021: verification/v1pt2/ holds this source with lines of spaces added at the top and bottom, to be compiled after two
+unrelated helper contracts. This compiler's output depends on its memory state, which depends on the input's length and on
+what the same compiler instance compiled before; the padding and helpers recreate the state that produced the deployed
+code. See verification/README.md. Compiled on its own, this file comes out 1 or 2 bytes short of the chain's 10,859.
+Etherscan verified v1.2 in Nov 2021 from the same padded file, but the copy it shows has altered top padding and does
+not compile as shown.
 
  */
 
