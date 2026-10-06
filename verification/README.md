@@ -22,7 +22,9 @@ with lines of spaces at the top and bottom. Between its padding lines, each `eth
 in [`etheria-1pt0_0xe41.sol`](../etheria-1pt0_0xe41.sol) or [`etheria-1pt2_0xb21.sol`](../etheria-1pt2_0xb21.sol)
 (v1.0's copy has Windows line endings). The helpers and padding lengths were found by random search:
 v1.2's by [Dedaub](https://dedaub.com) in Nov 2021, and v1.0's the same way in Jan 2023. The `README` in
-each of those folders has the original instructions.
+each of those folders has the original instructions. The helpers are small public example contracts,
+some of them deliberately buggy examples from security write-ups, used here only because compiling them
+leaves the compiler in the right state; they are not part of Etheria and were never deployed by it.
 
 **Do not edit, reformat or re-save any file in a recipe**, including the v0.9 and v1.1 source files. Any
 change, even to a comment, whitespace or line endings, can break the match. The repository's
