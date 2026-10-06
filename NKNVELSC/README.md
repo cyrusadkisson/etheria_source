@@ -30,9 +30,48 @@ v0.7 and v0.85 were deployed from uncommitted working copies of the etheriaSourc
 that match byte for byte, and the file comments describe how each one differs from the nearest
 commits in the original development repo.
 
-To check a match, compile the whole `.sol` file (header comment included) with the listed compiler,
-optimizer on, and compare the `Etheria` runtime bytecode with `eth_getCode` for the address.
-Compile each file exactly as it is: these old compilers' output can depend on the whole file text,
-comments included, so a copy with the header removed or edited may not reproduce the match.
-The old compilers are only available as `soljson` builds in
-[ethereum/solc-bin](https://github.com/ethereum/solc-bin).
+## How to verify
+
+You need [Node.js](https://nodejs.org) and a copy of this folder.
+
+1. Download the compiler. These old versions only exist as `soljson` builds in
+   [ethereum/solc-bin](https://github.com/ethereum/solc-bin). Two files cover all four contracts:
+   - v0.6: https://binaries.soliditylang.org/bin/soljson-v0.1.4+commit.5f6c3cdf.js
+   - v0.7, v0.8 and v0.85: https://binaries.soliditylang.org/bin/soljson-v0.1.5-nightly.2015.10.13+commit.e11e10f8.js
+
+   Any build listed in the table above also works for its version.
+
+2. Save this as `verify.js`:
+
+   ```js
+   // usage: node verify.js <soljson file> <.sol file>
+   // Prints the runtime bytecode of contract Etheria. One compile per run (a fresh compiler instance).
+   const fs = require('fs'), path = require('path');
+   const solc = require(path.resolve(process.argv[2]));
+   const compile = solc.cwrap('compileJSON', 'string', ['string', 'number']);
+   const out = JSON.parse(compile(fs.readFileSync(process.argv[3], 'utf8'), 1)); // 1 = optimizer on
+   console.log(out.contracts.Etheria.runtimeBytecode);
+   ```
+
+3. Compile a file, for example v0.7:
+
+   ```
+   node verify.js soljson-v0.1.5-nightly.2015.10.13+commit.e11e10f8.js etheria-0pt7_0x014.sol
+   ```
+
+   It prints the runtime bytecode as hex. Node also prints an `Invalid asm.js` warning, which is harmless.
+
+4. Compare the output with the `chain:` line in the file's header comment, which is the deployed
+   bytecode (without the `0x`). To check against the chain itself, ask any Ethereum node for the
+   contract's code; the result is `0x` followed by the same hex:
+
+   ```
+   curl -s -X POST -H 'Content-Type: application/json' \
+     --data '{"jsonrpc":"2.0","id":1,"method":"eth_getCode","params":["0x0148368e9efd8d6a5dd56134cd2b3f941e10d953","latest"]}' \
+     <your node's RPC URL>
+   ```
+
+Compile each file exactly as it is (header comment included), one compile per run, as `verify.js`
+does. These old compilers' output can depend on the whole file text, comments included, and on
+anything the same compiler instance compiled before, so an edited copy or a reused instance may not
+reproduce the match.
