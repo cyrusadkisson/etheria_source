@@ -1,8 +1,8 @@
 /*
 
 Etheria v1.2
-Block 459708  
-Oct-29-2015 09:11:55 PM +UTC
+Block 470957
+Nov-01-2015 01:20:11 AM +UTC
 0xb21f8684f23dbb1008508b4de91a0aaedebdb7e4
 
 
@@ -27,7 +27,7 @@ Oct-29-2015 09:11:55 PM +UTC
 
 var etheriaAddress = "0xb21f8684f23dbb1008508b4de91a0aaedebdb7e4";
 var abi = [
-	{"constant":false,"inputs":[],"name":"setLocked","outputs":[],"type":"functin"},
+	{"constant":false,"inputs":[],"name":"setLocked","outputs":[],"type":"function"},
 	{"constant":true,"inputs":[],"name":"getWhatHappened","outputs":[{"name":"","type":"string"}],"type":"function"},
 	{"constant":true,"inputs":[],"name":"getLocked","outputs":[{"name":"","type":"bool"}],"type":"function"},
 	{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"buyTile","outputs":[],"type":"function"},
@@ -47,7 +47,15 @@ var abi = [
 ];
 var etheria = new web3.eth.Contract(abi, etheriaAddress);
 
-Verified by Etherscan in Nov 2021 by triple-compiling with 0.1.6-d41f8b7c solc main release.
+Verified on Etherscan in Nov 2021 by compiling three times with solc 0.1.6 (d41f8b7c), optimizer on (200 runs).
+Etherscan's copy is this source plus padding (lines of spaces before and after it), which shifts this old compiler's
+memory layout and with it the optimizer's output. As stored on Etherscan it has lost the newline after the first
+padding line and no longer compiles.
+
+Local compiles of this file with solc 0.1.6 come out 10,857 or 10,858 bytes against 10,859 on chain, and differ only in optimizer
+choices: the chain computes the stored lengths of "setName:OK" and "buyTile:OK" at run time where a local compile usually
+folds one of them into a constant, and a few blocks are ordered differently. Which choice the optimizer makes depends on
+memory layout, so it changes with the input's length and with what the same compiler instance compiled before.
 
  */
 

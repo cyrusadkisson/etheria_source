@@ -27,7 +27,7 @@ Oct-29-2015 09:11:55 PM +UTC
 
 var etheriaAddress = "0x169332ae7d143e4b5c6baedb2fef77bfbddb4011";
 var abi = var abi = [
-	{"constant":false,"inputs":[],"name":"setLocked","outputs":[],"type":"functin"},
+	{"constant":false,"inputs":[],"name":"setLocked","outputs":[],"type":"function"},
 	{"constant":true,"inputs":[],"name":"getWhatHappened","outputs":[{"name":"","type":"string"}],"type":"function"},
 	{"constant":true,"inputs":[],"name":"getLocked","outputs":[{"name":"","type":"bool"}],"type":"function"},
 	{"constant":false,"inputs":[{"name":"col","type":"uint8"},{"name":"row","type":"uint8"}],"name":"buyTile","outputs":[],"type":"function"},
