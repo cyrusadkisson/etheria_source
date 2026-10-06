@@ -16,6 +16,10 @@ wrapped tokens or trading for these addresses is a scam.**
 | `etheria-0pt8_0xcf1.sol` | v0.8 | `0xcf1eecf5929c151427dc3662a28353266ea3f9e6` | block 385709, 2015-10-15 03:55 | `acceptOffer` has no owner check, so anyone can accept any offer on any tile |
 | `etheria-0pt85_0xa2f.sol` | v0.85 | `0xa2f63e28172ebf2477f4c1a87aed68aaa3ebbe3d` | block 399334, 2015-10-17 21:45 | `makeOffer` lets anyone take a tile that hasn't been farmed in 100,000 blocks for 1 ETH (paid to the creator), and `acceptOffer` has no owner check |
 
+**Were there any others?** No. [EXHAUSTIVE_PRE_V0pt9_SEARCH.md](EXHAUSTIVE_PRE_V0pt9_SEARCH.md) checks every
+contract deployed on Ethereum mainnet before v0.9. These four are the only Etheria-like contracts
+from before v0.9 that still exist.
+
 Each file starts with a comment that explains the bug in detail and gives the address and ABI.
 Below the comment is source code that compiles to exactly the bytecode on the chain:
 
