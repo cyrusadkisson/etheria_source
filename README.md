@@ -19,13 +19,24 @@ Each file starts with a comment giving the address, the function signatures, the
 match, followed by the source.
 
 - **v0.9 and v1.0** change tile owners only through offers (`makeOffer`, `acceptOffer` and related
-  functions). Their tiles can be wrapped as ERC-721 tokens (see Wrappers below).
-- **v1.1 and v1.2** have `setOwner` for direct transfers. It checks `tx.origin`, so tiles can only be
-  owned by ordinary accounts: **sending a tile to a contract address loses it.**
+  functions). These check `msg.sender`, so a contract can own and move their tiles, which is what lets
+  them be wrapped as ERC-721 tokens (see Wrappers below).
+- **v1.1 and v1.2** move tiles with `setOwner`, which checks `tx.origin`, the account that signed the
+  transaction. **They will be wrapped as ERC-721 tokens soon after Ethereum's frame transactions
+  ([EIP-8141](https://eips.ethereum.org/EIPS/eip-8141)) go live**, which let a contract send its own
+  transactions (see Exchanges below).
+
+  **Until then, keep v1.1 and v1.2 tiles in a dedicated wallet: an ordinary account (EOA) that you use
+  only with the Etheria contracts and the EtheriaExchangeXL exchanges.** Because `setOwner` trusts
+  `tx.origin`, any contract that runs during a transaction sent from the tile-holding account can move
+  its tiles. That includes contracts that a seemingly safe app calls along the way, such as hooks run
+  by some token and marketplace transfers. Never send these tiles to a contract address either: a
+  contract can't move a tile it receives.
 - v0.9 has no `kill` function. v1.0, v1.1 and v1.2 have one, but each is locked, so it can never run.
 
 **Compiling these.** solc 0.1.6 exists only as a `soljson` build in
-[ethereum/solc-bin](https://github.com/ethereum/solc-bin). Its output can depend on what the same
+[ethereum/solc-bin](https://github.com/ethereum/solc-bin); a pinned copy is in
+[`verification/compiler/`](verification/compiler/). Its output can depend on what the same
 compiler instance compiled before, so each version matches only through a recipe: v0.9 and v1.1 by
 compiling their file several times in one instance, v1.0 and v1.2 by compiling padded copies of their
 sources after two unrelated helper contracts. [`verification/`](verification/) has the recipes and a
@@ -51,7 +62,8 @@ longer change.
 | EtheriaWrapper for v1.0 | `0x629a493a94b611138d4bee231f94f5c08ab6570a` | [`EtheriaWrapper-v1pt0_0x629.sol`](EtheriaWrapper-v1pt0_0x629.sol) |
 
 These turn v0.9 and v1.0 tiles into standard ERC-721 tokens, using the tiles' own offer functions. Both
-are Solidity 0.8.7 and verified on Etherscan. The files explain how to wrap and unwrap.
+are Solidity 0.8.7 and verified on Etherscan. The files explain how to wrap and unwrap. Wrappers for
+v1.1 and v1.2 will follow soon after EIP-8141 goes live (see Exchanges below).
 
 ## Exchanges (v1.1 and v1.2)
 
@@ -60,8 +72,24 @@ are Solidity 0.8.7 and verified on Etherscan. The files explain how to wrap and 
 | EtheriaExchangeXL v1.1 | `0x341db17810769e7470b22d75127c37eec44f8179` | v1.1 tiles | [`EtheriaExchangeXL-1pt1_0x341.sol`](EtheriaExchangeXL-1pt1_0x341.sol) |
 | EtheriaExchangeXL v1.2 | `0x111b76dbbe885d05793de91254554f0a781d15db` | v1.2 tiles | [`EtheriaExchangeXL-1pt2_0x111.sol`](EtheriaExchangeXL-1pt2_0x111.sol) |
 
-Marketplaces for asks and bids, including bids for any tile within a range of columns, rows and
-elevations. Both are Solidity 0.8 with verified source on block explorers.
+v1.1 and v1.2 tiles will be wrapped as ERC-721 tokens soon after Ethereum's frame transactions
+([EIP-8141](https://eips.ethereum.org/EIPS/eip-8141), scheduled for the Hegotá upgrade) go live. Frame
+transactions let a contract account send transactions itself, so a wrapper can pass `setOwner`'s
+`tx.origin` check. Until then, these tiles trade through EtheriaExchangeXL, which works with the tiles
+directly and never holds one. Use it from the dedicated tile wallet described above. How it works:
+
+- **Bids:** a bidder deposits ETH for any tile that falls within the ranges of columns, rows, elevation
+  and neighbouring water tiles they choose. A range can be a single tile.
+- **Accepting a bid:** the tile's owner accepts from their own account. In that same transaction the
+  exchange calls `setOwner`, which moves the tile straight to the bidder, and credits the seller with
+  the bid minus a fee. The contract caps the fee at 5%; `feeRate()` gives the current rate in basis
+  points.
+- **Asks:** prices that owners post for buyers to see. Nothing is held for them.
+- **Withdrawals:** bidders can cancel their bids, and sellers collect their proceeds, at any time.
+
+Both exchanges are the same contract, one pointed at v1.1 and one at v1.2, compiled with Solidity 0.8.6
+and verified on Etherscan. Once the v1.1 and v1.2 wrappers are live, the exchanges will be
+decommissioned.
 
 ## Test contracts from before v0.9: [`NKNVELSC/`](NKNVELSC/)
 
@@ -79,5 +107,8 @@ placement checked for gravity, collisions and tile boundaries. That proved too e
 and that is what etheria.world renders.
 
 These three folders are standalone copies of the original website that render tiles with the old
-mechanics, so anyone can see how the old builds looked without taking anyone's word for it. The v1.1
-folder also covers v1.2. Each folder's `_README.txt` has the details.
+mechanics, so anyone can see how the old builds looked without taking anyone's word for it. There is
+one folder per version because the build mechanics differed slightly between versions. There is no
+v1.2 folder: v1.2's mechanics are identical to v1.1's, including the same brick definitions
+(BlockDefinitionStorage `0xd4e6…`), so the v1.1 folder renders v1.2 tiles too. Each folder's
+`_README.txt` explains how to run it.
