@@ -26,8 +26,8 @@ Below the comment is source code that compiles to exactly the bytecode on the ch
 | Version | Compiler (optimizer on) |
 |---|---|
 | v0.6 | solc 0.1.4 (also 0.1.3) |
-| v0.7 | solc 0.1.5 (release or 2015-10-13 nightly; also 0.1.6, 0.1.7) |
-| v0.8 | solc 0.1.5 (release or 2015-10-13 nightly; also 0.1.6, 0.1.7) |
+| v0.7 | solc 0.1.5 (release or 2015-10-13 nightly; also the 2015-10-15 and 2015-10-16 nightlies, 0.1.6 and 0.1.7) |
+| v0.8 | solc 0.1.5 (release or 2015-10-13 nightly; also the 2015-10-15 and 2015-10-16 nightlies, 0.1.6 and 0.1.7) |
 | v0.85 | solc 0.1.6 (also 0.1.5 nightlies of 2015-10-13/15/16 and 0.1.7; not the 0.1.5 release) |
 
 v0.7 and v0.85 were deployed from uncommitted working copies of the etheriaSource repo. Their sources here are reconstructions
@@ -41,9 +41,13 @@ You need [Node.js](https://nodejs.org) and a copy of this folder.
 1. Download the compiler. These old versions only exist as `soljson` builds in
    [ethereum/solc-bin](https://github.com/ethereum/solc-bin). Two files cover all four contracts:
    - v0.6: https://binaries.soliditylang.org/bin/soljson-v0.1.4+commit.5f6c3cdf.js
+     (SHA-256 `34a1e8b62b5eae88ee59e572c8f941a375d587a7f3c21b6d24f415452bdc7a15`)
    - v0.7, v0.8 and v0.85: https://binaries.soliditylang.org/bin/soljson-v0.1.5-nightly.2015.10.13+commit.e11e10f8.js
+     (SHA-256 `6e50b566c9e11b307e7c71e204cdba63e1eb555a623216010027a887d6b23d1b`)
 
-   Any build listed in the table above also works for its version.
+   These are the hashes solc-bin publishes. To check a download, run `sha256sum` on it (Linux) or
+   `shasum -a 256` (macOS) and compare. Copies of these compilers from other places can differ from the
+   official files. Any build listed in the table above also works for its version.
 
 2. Save this as `verify.js`:
 
@@ -79,3 +83,5 @@ Compile each file exactly as it is (header comment included), one compile per ru
 does. These old compilers' output can depend on the whole file text, comments included, and on
 anything the same compiler instance compiled before, so an edited copy or a reused instance may not
 reproduce the match.
+
+Etheria v0.9 and later have their own recipes in [`../verification/`](../verification/).

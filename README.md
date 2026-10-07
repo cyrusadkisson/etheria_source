@@ -3,8 +3,9 @@
 Source code for Etheria and the contracts around it, with each contract's mainnet address and the
 evidence that the source here matches the code on the chain.
 
-Etheria is a virtual world deployed to Ethereum in October 2015. Its map is a 33×33 grid of 1,089
-tiles that players own, trade and build on. Website: [etheria.world](https://etheria.world).
+Etheria is a decentralized 3D virtual world of unique hexagonal water and land tiles, created and deployed to the Ethereum blockchain in October 2015. Its provably scarce land tiles can be owned, transferred, and customized with voxel-based sculptures, and its entire world state, including ownership and build data, is stored natively on-chain. Etheria cannot be altered against its owners' will or destroyed, not even by its creator, and will persist as long as Ethereum does.
+
+Website: [etheria.world](https://etheria.world)
 
 ## Etheria
 
